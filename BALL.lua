@@ -5,5 +5,13 @@ local scripts = {
 }
 
 for _, url in ipairs(scripts) do
-    loadstring(game:HttpGet(url))()
+    task.spawn(function()
+        local ok, err = pcall(function()
+            loadstring(game:HttpGet(url))()
+        end)
+
+        if not ok then
+            warn("Erro:", url, err)
+        end
+    end)
 end
